@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://mockjs.com/bower_components/mockjs/dist/mock.js"></script>
+    <link rel="stylesheet" href="style/reset.css">
+    <script src="script/jquery-3.3.1.min.js"></script>
+    <style type="text/css">
+        ul {
+            list-style: none;
+        }
+
+        nav a, aside a {
+            text-decoration: none;
+            display: block;
+            width: 100px;
+            background-color: #ccc;
+            text-align: center;
+            margin-right: 1px;
+        }
+
+        nav a:hover {
+            background-color: #f60;
+            color: #fff;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav {
+            height: 50px;
+            width: 100%;
+            /* top: 400px; */
+            line-height: 50px;
+            box-shadow: 0px 1px 10px #ddd;
+            min-width: 830px;
+            text-align: center;
+            position: fixed;
+            display: block;
+            background: #fff;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .searchView input {
+            border: none;
+            background: #EFEFEF;
+            height: 26px;
+            outline: none;
+            width: 214px;
+            padding: 0 14px;
+            border-radius: 3px;
+            position: relative;
+            top: -4px;
+            left: -17px;
+            font-size: 16px;
+        }
+
+        .addMenu {
+            float: right;
+            display: block;
+            height: 50%;
+            position: relative;
+            top: 25%;
+        }
+
+        .headPic {
+            float: right;
+            display: block;
+            height: 40px;
+            margin-left: 2.5%;
+            margin-right: 20px;
+            cursor: pointer;
+            border-radius: 20px;
+            position: relative;
+            top: -3px;
+        }
+
+        aside {
+            position: fixed;
+            width: 200px;
+            background-color: #fbff98;
+        }
+
+        aside a {
+            margin-left: 20%;
+            text-align: center;
+            margin-bottom: 1px;
+        }
+
+        article {
+            margin-left: 200px;
+            height: auto;
+            /*background-color: orange;*/
+        }
+
+        .article_title {
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            display: -webkit-flex;
+            display: flex;
+            /* width: 310px; */
+            margin: 0 20px 1px 20px;
+            height: 80px;
+            box-shadow: 0px 0px 10px #ccc;
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+            text-align: left;
+        }
+
+        .card .title {
+            text-decoration: none;
+            display: block;
+            width: auto;
+            height: auto;
+            background-color: #ccc;
+            height: 10px;
+            line-height: 10px;
+            position: absolute;
+            top: 10px;
+        }
+
+        .card .url {
+            background-color: #4ceede;
+            height: 10px;
+            line-height: 10px;
+            position: absolute;
+            bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<header></header>
+<nav>
+    <ul style="margin-left: 10%">
+        <li><a href="#">我的书签</a></li>
+        <li><a href="#">热门收藏</a></li>
+    </ul>
+    <img src="https://q.qlogo.cn/qqapp/1105053577/575CCF4380B4F2FEC7853E0A52A96AF9/100" alt="" class="headPic">
+    <img src="https://shouqu.me/app/images/add@3x.png" title="添加新书签" alt="" class="addMenu">
+    <div class="searchView">
+        <input type="text" class="search" placeholder="搜索">
+    </div>
+</nav>
+<div style="height: 50px"></div>
+<aside>
+    <ul>
+        <li><a class="section-mylist nav-selected" href="#"><span class="nav-icon"></span>我的列表</a></li>
+        <li class="section-recommendedcontainer"><a class="section-recommended" href="#">推荐</a></li>
+        <li><a class="section-favorites" href="#"><span class="nav-icon"></span>添加到收藏夹</a></li>
+        <li><a class="section-archive" href="#"><span class="nav-icon"></span>存档列表</a></li>
+        <li class="nav-default-divider"></li>
+        <li><a class="nav-sublist filter-articles" href="#"><span>文本</span></a></li>
+        <li><a class="nav-sublist filter-videos" href="#"><span>视频</span></a></li>
+        <li><a class="nav-sublist filter-images" href="#"><span>图像</span></a></li>
+        <li>
+            <a class="filter-tags" href="#"><span class="nav-icon"></span>标签 <span class="nav-rarrow">›</span></a>
+        </li>
+        <li><a class="section-inbox" href="#"><span class="nav-icon"></span> <span class="inbox_badge"></span> 收件箱</a>
+        </li>
+    </ul>
+</aside>
+<article>
+    <div class="article_title">
+        我的收藏
+    </div>
+    <div id="content">
+        <div class="card">
+            <img src="http://www.w3school.com.cn/i/eg_tulip.jpg" alt="" width="80px" height="80px">
+            <div style="height: 100%">
+                <a class="title" href="www.baidu.com">百度一下，你就知道</a>
+                <span class="url" style="display: block;">www.baidu.com</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="test">
+
+    </div>
+</article>
+<footer></footer>
+<script>
+    var data = Mock.mock({
+            "list|15": [{
+                'id|+1': 1,
+                "url": '@url',
+                'color': '@color',
+                'name': '@cname'
+            }]
+        }
+    );
+    console.log(data)
+    var html = "";
+    $.each(data.list, function (index, item) {
+        html += "<div class=\"card\">" +
+            "<img src=\"http://www.w3school.com.cn/i/eg_tulip.jpg\" width=\"80px\" height=\"80px\">" +
+            "<div style=\"height: 100%\">" +
+            "<a class=\"title\" href=\"www.baidu.com\">" + item.name + "</a>" +
+            "<span class=\"url\" style=\"display: block;\">" + item.url + "</span>" +
+            "</div>" +
+            "</div>"
+
+    })
+    $('#content').html(html)
+
+</script>
+</body>
+</html>
