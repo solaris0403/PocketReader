@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">PocketReader-Android</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">口袋阅读</string>
+
+    <string name="tab_main_bookmark">书签</string>
+    <string name="tab_main_hot">热门</string>
+    <string name="tab_main_mine">我的</string>
+
 </resources>

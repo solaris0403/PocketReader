@@ -1,45 +1,71 @@
 package com.pocketreader.pocketreader;
 
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.pocketreader.pocketreader.fragment.BaseFragment;
+import com.pocketreader.pocketreader.fragment.BookmarkFragment;
+import com.pocketreader.pocketreader.fragment.HotFragment;
+import com.pocketreader.pocketreader.fragment.MineFragment;
 
-    private TextView mTextMessage;
-
+public class MainActivity extends BaseActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    onShowFragment(mBookmarkFragment);
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    onShowFragment(mHotFragment);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    onShowFragment(mMineFragment);
                     return true;
             }
             return false;
         }
-
     };
+
+    private BookmarkFragment mBookmarkFragment;
+    private HotFragment mHotFragment;
+    private MineFragment mMineFragment;
+
+    private FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mTextMessage = (TextView) findViewById(R.id.message);
+        mBookmarkFragment = new BookmarkFragment();
+        mHotFragment = new HotFragment();
+        mMineFragment = new MineFragment();
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .add(R.id.content, mBookmarkFragment)
+                .add(R.id.content, mHotFragment)
+                .add(R.id.content, mMineFragment)
+                .hide(mHotFragment)
+                .hide(mMineFragment)
+                .show(mBookmarkFragment)
+                .commit();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    private void onShowFragment(BaseFragment fragment){
+        mFragmentManager.beginTransaction()
+                .hide(mBookmarkFragment)
+                .hide(mHotFragment)
+                .hide(mMineFragment)
+                .show(fragment)
+                .commit();
+    }
 }
