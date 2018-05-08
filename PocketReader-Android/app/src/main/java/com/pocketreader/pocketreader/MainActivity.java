@@ -1,12 +1,14 @@
 package com.pocketreader.pocketreader;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.view.MenuItem;
 
+import com.pocketreader.pocketreader.account.AccountUtils;
 import com.pocketreader.pocketreader.fragment.BaseFragment;
 import com.pocketreader.pocketreader.fragment.BookmarkFragment;
 import com.pocketreader.pocketreader.fragment.HotFragment;
@@ -43,6 +45,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!AccountUtils.check()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
         setContentView(R.layout.activity_main);
         mBookmarkFragment = new BookmarkFragment();
         mHotFragment = new HotFragment();
@@ -60,7 +66,7 @@ public class MainActivity extends BaseActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    private void onShowFragment(BaseFragment fragment){
+    private void onShowFragment(BaseFragment fragment) {
         mFragmentManager.beginTransaction()
                 .hide(mBookmarkFragment)
                 .hide(mHotFragment)

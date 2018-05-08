@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -38,4 +38,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.+'
     testCompile 'junit:junit:4.12'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

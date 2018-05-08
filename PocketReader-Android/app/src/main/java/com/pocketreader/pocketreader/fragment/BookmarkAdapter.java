@@ -24,9 +24,9 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
     private Context mContext;
     private List<Bookmark> mData;
 
-    public BookmarkAdapter(Context mContext, ArrayList<Bookmark> mData) {
+    public BookmarkAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mData = mData;
+        mData = new ArrayList<>();
     }
 
     public void update(List<Bookmark> data) {
