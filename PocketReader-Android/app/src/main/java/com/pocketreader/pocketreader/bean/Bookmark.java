@@ -6,7 +6,6 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -58,22 +57,6 @@ public class Bookmark extends BmobObject {
 
     public void setAuth(String auth) {
         this.auth = auth;
-    }
-
-    public static void insert() {
-        Bookmark p2 = new Bookmark();
-        p2.setTitle("lucky");
-        p2.setUrl("北京海淀");
-        p2.save(new SaveListener<String>() {
-            @Override
-            public void done(String objectId, BmobException e) {
-                if (e == null) {
-                    PLog.d("添加数据成功，返回objectId为：" + objectId);
-                } else {
-                    PLog.d("创建数据失败：" + e.getMessage());
-                }
-            }
-        });
     }
 
     public static void query() {

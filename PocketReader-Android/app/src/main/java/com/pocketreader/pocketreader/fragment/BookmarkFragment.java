@@ -13,7 +13,6 @@ import com.pocketreader.pocketreader.PLog;
 import com.pocketreader.pocketreader.R;
 import com.pocketreader.pocketreader.bean.Bookmark;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -25,8 +24,6 @@ public class BookmarkFragment extends BaseFragment {
     private BookmarkAdapter mBookmarkAdapter;
     private RecyclerView mRecyclerView;
 
-    private ArrayList<Bookmark> mBookmarks = new ArrayList<>();
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +33,7 @@ public class BookmarkFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
         mRecyclerView = view.findViewById(R.id.recyclerView);
-        mBookmarkAdapter = new BookmarkAdapter(getContext(), mBookmarks);
+        mBookmarkAdapter = new BookmarkAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
