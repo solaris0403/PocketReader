@@ -12,7 +12,7 @@ import cn.bmob.v3.listener.SaveListener;
  */
 
 public class PostDao {
-    interface OnPostListener {
+    public interface OnPostListener {
         void onSuccess();
 
         void onFail();

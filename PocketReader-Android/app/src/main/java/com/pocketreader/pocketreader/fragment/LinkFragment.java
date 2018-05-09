@@ -2,6 +2,7 @@ package com.pocketreader.pocketreader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,19 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pocketreader.pocketreader.PLog;
 import com.pocketreader.pocketreader.R;
-import com.pocketreader.pocketreader.bean.Bookmark;
+import com.pocketreader.pocketreader.bean.Link;
+import com.pocketreader.pocketreader.dao.LinkDao;
 
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-
-public class BookmarkFragment extends BaseFragment {
-
-    private BookmarkAdapter mBookmarkAdapter;
+public class LinkFragment extends BaseFragment {
+    private static final String TAG = LinkFragment.class.getSimpleName();
+    private LinkAdapter mLinkAdapter;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -33,28 +30,28 @@ public class BookmarkFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
         mRecyclerView = view.findViewById(R.id.recyclerView);
-        mBookmarkAdapter = new BookmarkAdapter(getContext());
+        mLinkAdapter = new LinkAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mBookmarkAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        mRecyclerView.setAdapter(mLinkAdapter);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        BmobQuery<Bookmark> query = new BmobQuery<>();
-        query.setLimit(50);
-        query.findObjects(new FindListener<Bookmark>() {
+        LinkDao.queryLinks(new LinkDao.OnLinkFindListener() {
             @Override
-            public void done(List<Bookmark> list, BmobException e) {
-                if (e == null) {
-                    mBookmarkAdapter.update(list);
-                    PLog.d("查询成功：共" + list.size() + "条数据。");
-                } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                }
+            public void onSuccess(List<Link> list) {
+                mLinkAdapter.update(list);
+                Log.e(TAG, "onSuccess:" + list.size());
+            }
+
+            @Override
+            public void onFail() {
+                Log.e(TAG, "onFail");
             }
         });
     }
