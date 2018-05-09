@@ -5,31 +5,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.pocketreader.pocketreader.ColorUtils;
 import com.pocketreader.pocketreader.R;
-import com.pocketreader.pocketreader.bean.Bookmark;
+import com.pocketreader.pocketreader.bean.Link;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by tony on 5/7/18.
  */
 
-public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder> {
-
+public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.BookmarkViewHolder> {
     private Context mContext;
-    private List<Bookmark> mData;
+    private List<Link> mData;
 
-    public BookmarkAdapter(Context mContext) {
+    public LinkAdapter(Context mContext) {
         this.mContext = mContext;
         mData = new ArrayList<>();
     }
 
-    public void update(List<Bookmark> data) {
+    public void update(List<Link> data) {
         mData.clear();
         mData.addAll(data);
         notifyDataSetChanged();
@@ -44,10 +46,11 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
 
     @Override
     public void onBindViewHolder(BookmarkViewHolder holder, int position) {
-        Bookmark bookmark = mData.get(position);
-        holder.mItemView.setBackgroundColor(ColorUtils.randomColor());
-        holder.mTvTitle.setText(bookmark.getTitle());
-        holder.mTvUrl.setText(bookmark.getUrl());
+        Link link = mData.get(position);
+//        holder.lytBookmark.setBackgroundColor(ColorUtils.randomColor());
+//        holder.tvTitle.setText(bookmark.getTitle());
+        holder.tvSource.setText("人品日报");
+        holder.tvTime.setText("昨天10:30");
     }
 
     @Override
@@ -55,16 +58,21 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
         return mData.size();
     }
 
-    class BookmarkViewHolder extends RecyclerView.ViewHolder {
-        private RelativeLayout mItemView;
-        private TextView mTvTitle;
-        private TextView mTvUrl;
+    static class BookmarkViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.tv_title)
+        TextView tvTitle;
+        @BindView(R.id.tv_source)
+        TextView tvSource;
+        @BindView(R.id.tv_time)
+        TextView tvTime;
+        @BindView(R.id.img_picture)
+        ImageView imgPicture;
+        @BindView(R.id.lyt_bookmark)
+        RelativeLayout lytBookmark;
 
-        public BookmarkViewHolder(View itemView) {
-            super(itemView);
-            mItemView = itemView.findViewById(R.id.lyt_bookmark);
-            mTvTitle = itemView.findViewById(R.id.tv_title);
-            mTvUrl = itemView.findViewById(R.id.tv_url);
+        BookmarkViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
     }
 }
