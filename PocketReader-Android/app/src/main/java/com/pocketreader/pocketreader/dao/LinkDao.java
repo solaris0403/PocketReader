@@ -10,6 +10,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobACL;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -44,8 +45,8 @@ public class LinkDao {
         BmobACL acl = new BmobACL();
         acl.setPublicReadAccess(false);
         acl.setPublicWriteAccess(false);
-        acl.setReadAccess(User.getCurrentUser(User.class), true);
-        acl.setWriteAccess(User.getCurrentUser(User.class), true);
+        acl.setReadAccess(BmobUser.getCurrentUser(), true); // 设置当前用户可写的权限
+        acl.setWriteAccess(BmobUser.getCurrentUser(), true); // 设置当前用户可写的权限
         link.setACL(acl);
         link.save(new SaveListener<String>() {
             @Override
@@ -68,7 +69,6 @@ public class LinkDao {
     public static void queryLinks(final OnLinkFindListener listener) {
         BmobQuery<Link> query = new BmobQuery<>();
 //        query.setLimit(Integer.MAX_VALUE);
-        query.addWhereRelatedTo("author", new BmobPointer(User.getCurrentUser(User.class)));
         query.findObjects(new FindListener<Link>() {
             @Override
             public void done(List<Link> list, BmobException e) {
