@@ -298,6 +298,26 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
+                    android:layout_marginLeft="15dp"
+                    android:background="#dddddd" />
+
+                <LinearLayout
+                    android:id="@+id/lyt_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="退出账号" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
                     android:background="#dddddd" />
             </LinearLayout>
         </LinearLayout>

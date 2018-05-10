@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.pocketreader.pocketreader.account.User;
 import com.pocketreader.pocketreader.bean.Link;
+import com.pocketreader.pocketreader.model.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +14,11 @@ import java.util.List;
 import cn.bmob.v3.BmobACL;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by tony on 5/9/18.
@@ -52,6 +55,7 @@ public class LinkDao {
             @Override
             public void done(String objectId, BmobException e) {
                 if (e == null) {
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_LINK));
                     listener.onSuccess();
                 } else {
                     listener.onFail();
@@ -93,6 +97,25 @@ public class LinkDao {
                 } else {
                     listener.onFail();
                     Log.e("123", e.getErrorCode()+":"+e.toString());
+                }
+            }
+        });
+    }
+
+    public interface OnDeleteListener{
+        void onSuccess();
+        void onFail();
+    }
+
+    public static void deleteLink(Link link, final OnDeleteListener listener) {
+        link.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_LINK));
+                    listener.onSuccess();
+                } else {
+                    listener.onFail();
                 }
             }
         });
