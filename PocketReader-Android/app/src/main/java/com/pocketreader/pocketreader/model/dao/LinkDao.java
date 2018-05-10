@@ -3,8 +3,8 @@ package com.pocketreader.pocketreader.dao;
 import android.util.Log;
 
 import com.pocketreader.pocketreader.account.User;
-import com.pocketreader.pocketreader.bean.Link;
-import com.pocketreader.pocketreader.model.MessageEvent;
+import com.pocketreader.pocketreader.model.bean.Link;
+import com.pocketreader.pocketreader.event.MessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.pocketreader.pocketreader.account.AccountUtils;
@@ -33,6 +34,16 @@ public class MainActivity extends BaseActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.ic_search)
     SearchView icSearch;
+    @BindView(R.id.side_menu_collect)
+    LinearLayout sideMenuCollect;
+    @BindView(R.id.side_menu_message)
+    LinearLayout sideMenuMessage;
+    @BindView(R.id.side_menu_setting)
+    LinearLayout sideMenuSetting;
+    @BindView(R.id.side_menu_help)
+    LinearLayout sideMenuHelp;
+    @BindView(R.id.side_menu_about)
+    LinearLayout sideMenuAbout;
 
     private LinkFragment mLinkFragment;
     private HotFragment mHotFragment;
@@ -103,7 +114,7 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.ic_portrait, R.id.drawer_layout, R.id.ic_search})
+    @OnClick({R.id.ic_portrait, R.id.drawer_layout, R.id.ic_search, R.id.side_menu_collect, R.id.side_menu_message, R.id.side_menu_setting, R.id.side_menu_help, R.id.side_menu_about})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ic_portrait:
@@ -111,6 +122,16 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.ic_search:
                 Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.side_menu_collect:
+                break;
+            case R.id.side_menu_message:
+                break;
+            case R.id.side_menu_setting:
+                break;
+            case R.id.side_menu_help:
+                break;
+            case R.id.side_menu_about:
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package com.pocketreader.pocketreader.bean;
+package com.pocketreader.pocketreader.model.bean;
 
 import com.pocketreader.pocketreader.account.User;
 

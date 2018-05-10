@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pocketreader.pocketreader.R;
-import com.pocketreader.pocketreader.bean.Link;
+import com.pocketreader.pocketreader.model.bean.Link;
 import com.pocketreader.pocketreader.dao.LinkDao;
 import com.pocketreader.pocketreader.fragment.adpter.LinkAdapter;
-import com.pocketreader.pocketreader.model.MessageEvent;
+import com.pocketreader.pocketreader.event.MessageEvent;
 import com.pocketreader.pocketreader.ui.LinkDialogFragment;
 
 import org.greenrobot.eventbus.EventBus;

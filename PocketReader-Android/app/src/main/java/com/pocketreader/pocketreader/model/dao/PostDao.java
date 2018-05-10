@@ -1,7 +1,7 @@
 package com.pocketreader.pocketreader.dao;
 
 import com.pocketreader.pocketreader.account.User;
-import com.pocketreader.pocketreader.bean.Post;
+import com.pocketreader.pocketreader.model.bean.Post;
 
 import cn.bmob.v3.BmobACL;
 import cn.bmob.v3.exception.BmobException;

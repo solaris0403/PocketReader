@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pocketreader.pocketreader.R;
-import com.pocketreader.pocketreader.bean.Link;
+import com.pocketreader.pocketreader.model.bean.Link;
 
 import java.util.ArrayList;
 import java.util.List;

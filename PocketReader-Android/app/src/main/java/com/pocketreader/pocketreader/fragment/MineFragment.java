@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.pocketreader.pocketreader.LoginActivity;
 import com.pocketreader.pocketreader.R;
 import com.pocketreader.pocketreader.account.User;
-import com.pocketreader.pocketreader.model.MessageEvent;
+import com.pocketreader.pocketreader.event.MessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

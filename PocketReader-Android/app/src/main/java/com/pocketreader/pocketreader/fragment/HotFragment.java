@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.pocketreader.pocketreader.PLog;
 import com.pocketreader.pocketreader.R;
-import com.pocketreader.pocketreader.bean.Link;
+import com.pocketreader.pocketreader.model.bean.Link;
 import com.pocketreader.pocketreader.dao.LinkDao;
 import com.pocketreader.pocketreader.fragment.adpter.HotAdapter;
 

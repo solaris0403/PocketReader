@@ -1,4 +1,4 @@
-package com.pocketreader.pocketreader.model;
+package com.pocketreader.pocketreader.event;
 
 /**
  * Created by tony on 5/10/18.
