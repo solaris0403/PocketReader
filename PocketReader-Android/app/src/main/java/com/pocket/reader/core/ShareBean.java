@@ -120,7 +120,7 @@ public class ShareBean {
                 ", source='" + source + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", html='" + html + '\'' +
+                ", html='" + "---" + '\'' +
                 ", icon='" + icon + '\'' +
                 ", thumb='" + thumb + '\'' +
                 '}';

@@ -14,10 +14,13 @@ public class HtmlHandler extends AbsHandler {
     @Override
     public void handleRequest(ShareBean shareBean) {
         Log.d(TAG, "HtmlHandler handleRequest");
+        String html = shareBean.getHtml();
         Document document = Jsoup.parse(shareBean.getHtml());
-        shareBean.setTitle(document.title());
-        shareBean.setDescription(document.outerHtml());
-        shareBean.setDomain(RouterUtils.getHost(document.baseUri()));
+        shareBean.setTitle(document.title());//ok
+        shareBean.setThumb(HtmlParse.getImgStr(html));//ok
+        shareBean.setIcon(HtmlParse.getIcon(html, shareBean.getOriginalUrl()));//ok
+        shareBean.setDescription(HtmlParse.getDescription(html));//ok
+        shareBean.setDomain(RouterUtils.getHost(shareBean.getOriginalUrl()));//ok
         if (getSuccessor() != null) {
             getSuccessor().handleRequest(shareBean);
         } else {

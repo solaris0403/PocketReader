@@ -51,8 +51,13 @@
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.HelpActivity" />
-        <activity android:name=".activity.AboutActivity"/>
-        <activity android:name=".webview.BrowserActivity"/>
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".webview.BrowserActivity" />
+
+        <service
+            android:name=".activity.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
