@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -41,13 +41,14 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'org.greenrobot:eventbus:3.1.1'
-//    compile 'com.github.bumptech.glide:glide:4.7.1'
-
+    //    compile 'com.github.bumptech.glide:glide:4.7.1'
     //友盟通用库
     compile 'com.umeng.sdk:common:1.5.0'
     compile 'com.umeng.sdk:utdid:1.1.5.3'
     compile 'com.umeng.sdk:debug:1.0.0'
     //移动统计
     compile 'com.umeng.sdk:analytics:7.5.0'
-
+    compile files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
+    compile files('libs/jsoup-1.10.1.jar')
+    compile files('libs/lite-async-1.0.0.jar')
 }

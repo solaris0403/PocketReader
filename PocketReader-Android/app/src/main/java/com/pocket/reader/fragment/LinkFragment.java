@@ -19,6 +19,7 @@ import com.pocket.reader.fragment.adpter.LinkAdapter;
 import com.pocket.reader.model.bean.Link;
 import com.pocket.reader.model.dao.LinkDao;
 import com.pocket.reader.ui.LinkDialogFragment;
+import com.pocket.reader.webview.BrowserActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,8 +54,7 @@ public class LinkFragment extends BaseFragment {
         mLinkAdapter.setOnItemClickListener(new LinkAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Link link) {
-                Intent intent= new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
+                Intent intent= new Intent(getActivity(), BrowserActivity.class);
                 Uri content_url = Uri.parse(link.getUrl());
                 intent.setData(content_url);
                 startActivity(intent);
