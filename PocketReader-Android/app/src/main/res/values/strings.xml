@@ -5,4 +5,7 @@
     <string name="tab_main_hot">热门</string>
     <string name="tab_main_mine">我的</string>
 
+    <string name="string_collection">我的收藏</string>
+    <string name="menu_collection_create">创建文件夹</string>
+
 </resources>

@@ -13,13 +13,30 @@ public class ShareBean {
     private int type;//分享进来的类型,文本，或者链接
     private String originalUrl;//原始地址
     private String redirectUrl;//重定向后的地址
-    private String domain;//域名
+    private String host;//域名
     private String source;//来源
     private String title;//标题
     private String description;//描述
+    private String summary;//摘要
     private String html;//html dom
     private String icon;//该网站的图标，或者来源图标
     private String thumb;//第一张图片，用于展示
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     public String getExtra() {
         return extra;
@@ -51,14 +68,6 @@ public class ShareBean {
 
     public void setRedirectUrl(String redirectUrl) {
         this.redirectUrl = redirectUrl;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
     }
 
     public String getSource() {
@@ -116,11 +125,12 @@ public class ShareBean {
                 ", type=" + type +
                 ", originalUrl='" + originalUrl + '\'' +
                 ", redirectUrl='" + redirectUrl + '\'' +
-                ", domain='" + domain + '\'' +
+                ", host='" + host + '\'' +
                 ", source='" + source + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", html='" + "---" + '\'' +
+                ", summary='" + summary + '\'' +
+                ", html='" + html + '\'' +
                 ", icon='" + icon + '\'' +
                 ", thumb='" + thumb + '\'' +
                 '}';

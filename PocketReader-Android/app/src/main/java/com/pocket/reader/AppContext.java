@@ -6,6 +6,8 @@ import android.util.Log;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import cn.bmob.v3.Bmob;
 
@@ -14,6 +16,7 @@ import cn.bmob.v3.Bmob;
  */
 
 public class AppContext extends Application {
+    private static final String TAG = AppContext.class.getSimpleName();
     private static AppContext sInstance;
 
     public static AppContext getContext() {
@@ -46,7 +49,7 @@ public class AppContext extends Application {
             }
         };
         //x5内核初始化接口
-        QbSdk.initX5Environment(this,  cb);
+        QbSdk.initX5Environment(this, cb);
     }
 
     private void initBmob() {
@@ -54,8 +57,23 @@ public class AppContext extends Application {
     }
 
     private void initUMeng() {
-        UMConfigure.init(this, "5af141d3f29d98753800001b", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, "5af141d3f29d98753800001b", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "a7497bad6c828126967998254f36f518");
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         UMConfigure.setLogEnabled(true);
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                Log.d(TAG, deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
     }
 }

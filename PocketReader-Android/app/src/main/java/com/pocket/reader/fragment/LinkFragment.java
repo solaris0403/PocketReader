@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.pocket.reader.R;
 import com.pocket.reader.event.MessageEvent;
@@ -26,6 +27,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class LinkFragment extends BaseFragment {
     private static final String TAG = LinkFragment.class.getSimpleName();
@@ -59,11 +63,46 @@ public class LinkFragment extends BaseFragment {
                 intent.setData(content_url);
                 startActivity(intent);
             }
-        });
-        mLinkAdapter.setOnItemLongClickListener(new LinkAdapter.OnItemLongClickListener() {
+
             @Override
             public void onItemLongClick(View view, int position, Link link) {
                 showDialogFragment(link);
+            }
+
+            @Override
+            public void onShareClick(View view, int position, final Link link) {
+                Intent textIntent = new Intent(Intent.ACTION_SEND);
+                textIntent.setType("text/plain");
+                textIntent.putExtra(Intent.EXTRA_TEXT, link.getUrl());
+                startActivity(Intent.createChooser(textIntent, "分享"));
+            }
+
+            @Override
+            public void onCollectClick(View view, int position, final Link link) {
+                LinkDao.collectLink(link.getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null){
+                            mLinkAdapter.delete(link);
+                        }else{
+                            Toast.makeText(getActivity(), "收藏失败", 0).show();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onDeleteClick(View view, int position, final Link link) {
+                LinkDao.deleteLink(link.getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null){
+                            mLinkAdapter.delete(link);
+                        }else{
+                            Toast.makeText(getActivity(), "删除失败", 0).show();
+                        }
+                    }
+                });
             }
         });
         recyclerView.setAdapter(mLinkAdapter);
@@ -74,22 +113,12 @@ public class LinkFragment extends BaseFragment {
         neutralDialogFragment.show("删除", "删除该条", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                LinkDao.deleteLink(link, new LinkDao.OnDeleteListener() {
-                    @Override
-                    public void onSuccess() {
 
-                    }
-
-                    @Override
-                    public void onFail() {
-
-                    }
-                });
             }
         }, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+
             }
         }, getFragmentManager());
     }

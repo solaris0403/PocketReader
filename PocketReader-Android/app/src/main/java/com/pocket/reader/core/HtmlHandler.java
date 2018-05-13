@@ -20,7 +20,7 @@ public class HtmlHandler extends AbsHandler {
         shareBean.setThumb(HtmlParse.getImgStr(html));//ok
         shareBean.setIcon(HtmlParse.getIcon(html, shareBean.getOriginalUrl()));//ok
         shareBean.setDescription(HtmlParse.getDescription(html));//ok
-        shareBean.setDomain(RouterUtils.getHost(shareBean.getOriginalUrl()));//ok
+        shareBean.setHost(RouterUtils.getHost(shareBean.getOriginalUrl()));//ok
         if (getSuccessor() != null) {
             getSuccessor().handleRequest(shareBean);
         } else {

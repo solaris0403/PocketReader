@@ -2,9 +2,14 @@ package com.pocket.reader.core;
 
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.litesuits.android.async.AsyncTask;
+import com.pocket.reader.AppContext;
+import com.pocket.reader.event.MessageEvent;
+import com.pocket.reader.model.dao.LinkDao;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
@@ -42,13 +47,29 @@ public class ShareHelper {
      * @param shareBean
      */
     public static void processShareBean(ShareBean shareBean) {
+        MessageEvent event = new MessageEvent(MessageEvent.TYPE_PROCESS_LINK);
+        event.setMessage(shareBean.toString());
+        EventBus.getDefault().post(event);
         Log.d(TAG, "processShareBean:" + shareBean.toString());
         switch (shareBean.getType()) {
             case ShareBean.TYPE_INVALID:
+                Toast.makeText(AppContext.getContext(), "资源无效", Toast.LENGTH_SHORT).show();
                 break;
             case ShareBean.TYPE_TEXT:
+
                 break;
             case ShareBean.TYPE_LINK:
+                LinkDao.saveLink(shareBean, new LinkDao.OnLinkListener() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onFail() {
+
+                    }
+                });
                 break;
             default:
                 break;
@@ -100,5 +121,4 @@ public class ShareHelper {
         asyncTask.execute(shareBean);
         return asyncTask;
     }
-
 }

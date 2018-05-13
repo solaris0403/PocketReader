@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.pocket.reader.R;
 import com.pocket.reader.model.bean.Link;
 
@@ -37,6 +39,16 @@ public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.BookmarkViewHo
         notifyDataSetChanged();
     }
 
+    public void delete(Link link) {
+        for (Link data : mData) {
+            if (data.getObjectId().equals(link.getObjectId())) {
+                mData.remove(data);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
     @Override
     public BookmarkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_bookmark, parent, false);
@@ -47,26 +59,49 @@ public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.BookmarkViewHo
     @Override
     public void onBindViewHolder(BookmarkViewHolder holder, final int position) {
         final Link link = mData.get(position);
-//        holder.lytBookmark.setBackgroundColor(ColorUtils.randomColor());
-//        holder.tvTitle.setText(bookmark.getTitle());
-        holder.tvSource.setText("人品日报");
-        holder.tvTime.setText("昨天10:30");
+        holder.tvTitle.setText(link.getTitle());
+        holder.tvSource.setText(link.getSource());
+        holder.tvTime.setText(link.getCreatedAt());
         holder.lytBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick(view, position, link);
+                if (mListener != null) {
+                    mListener.onItemClick(view, position, link);
                 }
             }
         });
         holder.lytBookmark.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if (mItemLongClickListener != null) {
-                    mItemLongClickListener.onItemLongClick(view, position, link);
+                if (mListener != null) {
+                    mListener.onItemLongClick(view, position, link);
                     return true;
                 }
                 return false;
+            }
+        });
+        holder.tvShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onShareClick(view, position, link);
+                }
+            }
+        });
+        holder.tvCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onCollectClick(view, position, link);
+                }
+            }
+        });
+        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onDeleteClick(view, position, link);
+                }
             }
         });
     }
@@ -83,10 +118,14 @@ public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.BookmarkViewHo
         TextView tvSource;
         @BindView(R.id.tv_time)
         TextView tvTime;
-        @BindView(R.id.img_picture)
-        ImageView imgPicture;
         @BindView(R.id.lyt_bookmark)
         RelativeLayout lytBookmark;
+        @BindView(R.id.tv_share)
+        Button tvShare;
+        @BindView(R.id.tv_collect)
+        Button tvCollect;
+        @BindView(R.id.tv_delete)
+        Button tvDelete;
 
         BookmarkViewHolder(View view) {
             super(view);
@@ -96,20 +135,19 @@ public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.BookmarkViewHo
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position, Link link);
-    }
 
-    public interface OnItemLongClickListener {
         void onItemLongClick(View view, int position, Link link);
+
+        void onShareClick(View view, int position, Link link);
+
+        void onCollectClick(View view, int position, Link link);
+
+        void onDeleteClick(View view, int position, Link link);
     }
 
-    private OnItemClickListener mItemClickListener;
-    private OnItemLongClickListener mItemLongClickListener;
+    private OnItemClickListener mListener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mItemClickListener = listener;
-    }
-
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        this.mItemLongClickListener = listener;
+        this.mListener = listener;
     }
 }

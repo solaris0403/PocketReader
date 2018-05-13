@@ -17,6 +17,15 @@ public class Link extends BmobObject {
     private String thumb;
     private String source;
     private String content;
+    private boolean category;
+
+    public boolean getCategory() {
+        return category;
+    }
+
+    public void setCategory(boolean category) {
+        this.category = category;
+    }
 
     public String getUrl() {
         return url;

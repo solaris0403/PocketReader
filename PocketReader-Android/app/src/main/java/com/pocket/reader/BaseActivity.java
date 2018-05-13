@@ -1,13 +1,16 @@
 package com.pocket.reader;
 
+import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 /**
  * Created by tony on 5/7/18.
@@ -18,6 +21,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setWindowStatus();
+        PushAgent.getInstance(this).onAppStart();
     }
 
     @Override
@@ -33,6 +37,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     // 设置状态栏
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void setWindowStatus() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
@@ -40,11 +45,20 @@ public class BaseActivity extends AppCompatActivity {
             // 透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             // 设置状态栏颜色
-            getWindow().setBackgroundDrawableResource(R.color.main_color);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.main_color));
         }
     }
 
     protected void initToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

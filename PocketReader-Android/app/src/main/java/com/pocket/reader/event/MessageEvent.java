@@ -33,4 +33,5 @@ public class MessageEvent {
     }
 
     public static final int TYPE_LINK = 1;
+    public static final int TYPE_PROCESS_LINK = 2;
 }
