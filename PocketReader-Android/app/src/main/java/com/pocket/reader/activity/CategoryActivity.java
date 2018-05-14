@@ -75,30 +75,46 @@ public class CategoryActivity extends BaseActivity implements Toolbar.OnMenuItem
                     @Override
                     public void done(BmobException e) {
                         if (e != null) {
-                            ToastUtils.show("onDeleteClick failed");
+                            ToastUtils.show("删除失败");
                         } else {
                             initData();
                         }
                     }
                 });
-                LinkDao.deleteLinks(category.getId());
+                LinkDao.deleteLinksByCategoryId(category.getId());
             }
 
             @Override
-            public void onRenameClick(View view, int position, Category category) {
-                CategoryDao.renameCategory(category.getObjectId(), "rename", new UpdateListener() {
+            public void onRenameClick(View view, int position, final Category category) {
+                final FolderDialogFragment folderDialogFragment = new FolderDialogFragment();
+                folderDialogFragment.show("重命名", new DialogInterface.OnClickListener() {
                     @Override
-                    public void done(BmobException e) {
-                        if (e != null) {
-                            ToastUtils.show("onDeleteClick failed");
-                        } else {
-                            initData();
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String name = folderDialogFragment.getmEdtFolder().getText().toString();
+                        rename(category, name);
                     }
-                });
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }, getSupportFragmentManager());
             }
         });
         recyclerView.setAdapter(mCategoryAdapter);
+    }
+
+    private void rename(Category category, String newName) {
+        CategoryDao.renameCategory(category.getObjectId(), newName, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e != null) {
+                    ToastUtils.show("重命名失败");
+                } else {
+                    initData();
+                }
+            }
+        });
     }
 
 
@@ -107,9 +123,8 @@ public class CategoryActivity extends BaseActivity implements Toolbar.OnMenuItem
             @Override
             public void done(List<Category> list, BmobException e) {
                 if (e != null) {
-                    ToastUtils.show(e.toString());
+                    ToastUtils.show("分类信息获取失败");
                 } else {
-                    ToastUtils.show(String.valueOf(list.size()));
                     mCategoryAdapter.update(list);
                 }
             }
@@ -127,7 +142,7 @@ public class CategoryActivity extends BaseActivity implements Toolbar.OnMenuItem
         switch (item.getItemId()) {
             case R.id.menu_create:
                 final FolderDialogFragment folderDialogFragment = new FolderDialogFragment();
-                folderDialogFragment.show("ddd", new DialogInterface.OnClickListener() {
+                folderDialogFragment.show("创建分类", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String name = folderDialogFragment.getmEdtFolder().getText().toString();
@@ -139,7 +154,6 @@ public class CategoryActivity extends BaseActivity implements Toolbar.OnMenuItem
 
                     }
                 }, getSupportFragmentManager());
-
                 break;
         }
         return false;

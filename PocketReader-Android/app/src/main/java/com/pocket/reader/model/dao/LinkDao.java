@@ -78,6 +78,7 @@ public class LinkDao {
         link.setIcon(url);
         link.setSource(url);
         link.setThumb(url);
+        link.setCategory(0);
         BmobACL acl = new BmobACL();
         acl.setPublicReadAccess(false);
         acl.setPublicWriteAccess(false);
@@ -136,7 +137,7 @@ public class LinkDao {
         link1.delete(listener);
     }
 
-    public static void deleteLinks(Integer categoryId) {
+    public static void deleteLinksByCategoryId(Integer categoryId) {
         List<BmobObject> links = new ArrayList<>();
         for (Link link : LinkManager.getInstance().getLinks()) {
             if (link.getCategory().intValue() == categoryId.intValue()) {

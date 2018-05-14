@@ -2,7 +2,6 @@ package com.pocket.reader.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -10,14 +9,10 @@ import com.pocket.reader.BaseActivity;
 import com.pocket.reader.R;
 import com.pocket.reader.core.ShareHelper;
 import com.pocket.reader.event.MessageEvent;
-import com.pocket.reader.model.bean.Link;
-import com.pocket.reader.model.dao.LinkDao;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

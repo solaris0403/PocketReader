@@ -26,6 +26,7 @@ import com.pocket.reader.fragment.BaseFragment;
 import com.pocket.reader.fragment.HotFragment;
 import com.pocket.reader.fragment.LinkFragment;
 import com.pocket.reader.fragment.MineFragment;
+import com.pocket.reader.model.dao.LinkDao;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +67,11 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initToolbar();
         initViews();
+        initData();
+    }
+
+    private void initData() {
+        LinkDao.queryLinks();
     }
 
     private void initToolbar() {

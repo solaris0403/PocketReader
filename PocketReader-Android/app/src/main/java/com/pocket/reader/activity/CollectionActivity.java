@@ -2,7 +2,6 @@ package com.pocket.reader.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,8 +18,9 @@ import com.pocket.reader.model.bean.Category;
 import com.pocket.reader.model.bean.Link;
 import com.pocket.reader.model.dao.LinkDao;
 import com.pocket.reader.ui.CategoryDialog;
+import com.pocket.reader.utils.BrowserUtils;
+import com.pocket.reader.utils.ShareUtils;
 import com.pocket.reader.utils.ToastUtils;
-import com.pocket.reader.webview.BrowserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +66,7 @@ public class CollectionActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new CollectionAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Link link) {
-                Intent intent = new Intent(CollectionActivity.this, BrowserActivity.class);
-                Uri content_url = Uri.parse(link.getUrl());
-                intent.setData(content_url);
-                startActivity(intent);
+                BrowserUtils.openLink(CollectionActivity.this, link);
             }
 
             @Override
@@ -92,13 +89,12 @@ public class CollectionActivity extends BaseActivity {
                     @Override
                     public void done(final List<Category> list, BmobException e) {
                         if (e != null) {
-                            ToastUtils.show(e.toString());
+                            ToastUtils.show("获取收藏夹失败");
                         } else {
                             CategoryDialog.showCategoryDialog(CollectionActivity.this, list, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Category category = list.get(i);
-                                    LinkDao.collectLink(link.getObjectId(), category.getId(), new UpdateListener() {
+                                    LinkDao.collectLink(link.getObjectId(), list.get(i).getId(), new UpdateListener() {
                                         @Override
                                         public void done(BmobException e) {
                                             if (e == null) {
@@ -117,10 +113,7 @@ public class CollectionActivity extends BaseActivity {
 
             @Override
             public void onShareClick(View view, int position, Link link) {
-                Intent textIntent = new Intent(Intent.ACTION_SEND);
-                textIntent.setType("text/plain");
-                textIntent.putExtra(Intent.EXTRA_TEXT, link.getUrl());
-                startActivity(Intent.createChooser(textIntent, "分享"));
+                ShareUtils.share(CollectionActivity.this, link);
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
