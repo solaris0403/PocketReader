@@ -34,6 +34,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
+    compile files('libs/jsoup-1.10.1.jar')
+    compile files('libs/lite-async-1.0.0.jar')
+    compile files('libs/htmlparser.jar')
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-vector-drawable:26.+'
@@ -41,24 +45,16 @@ dependencies {
     compile 'cn.bmob.android:bmob-sdk:3.5.5'
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
-    testCompile 'junit:junit:4.12'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'org.greenrobot:eventbus:3.1.1'
-    //友盟通用库
     compile 'com.umeng.sdk:common:1.5.0'
     compile 'com.umeng.sdk:utdid:1.1.5.3'
     compile 'com.umeng.sdk:debug:1.0.0'
-    //推送
-    //PushSDK
     compile 'com.umeng.sdk:push:4.1.0'
-    //移动统计
     compile 'com.umeng.sdk:analytics:7.5.0'
-
-    compile files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
-    compile files('libs/jsoup-1.10.1.jar')
-    compile files('libs/lite-async-1.0.0.jar')
-    compile files('libs/htmlparser.jar')
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

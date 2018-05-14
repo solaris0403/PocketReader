@@ -14,11 +14,11 @@ import android.widget.TextView;
 
 import com.pocket.reader.PLog;
 import com.pocket.reader.R;
+import com.pocket.reader.data.LinkManager;
 import com.pocket.reader.fragment.adpter.HotAdapter;
-import com.pocket.reader.model.bean.Link;
 import com.pocket.reader.model.dao.LinkDao;
 
-import java.util.List;
+import java.util.Observable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,19 +101,14 @@ public class HotFragment extends BaseFragment {
                 });
                 break;
             case R.id.btn_query:
-                LinkDao.queryLinks(new LinkDao.OnLinkFindListener() {
-                    @Override
-                    public void onSuccess(List<Link> list) {
-                        tvResult.setText("onSuccess:" + list.size());
-                        mHotAdapter.update(list);
-                    }
-
-                    @Override
-                    public void onFail() {
-                        tvResult.setText("onFail:");
-                    }
-                });
+                LinkDao.queryLinks();
                 break;
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        super.update(observable, o);
+        tvResult.setText(String.valueOf(LinkManager.getInstance().getLinks().size()));
     }
 }

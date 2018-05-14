@@ -1,13 +1,15 @@
 package com.pocket.reader.model;
 
+import com.pocket.reader.account.User;
 import com.pocket.reader.model.bean.Category;
 
 import cn.bmob.v3.BmobACL;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+
+
 
 /**
  * Created by tony on 5/14/18.
@@ -17,15 +19,15 @@ public class CategoryDao {
     /**
      * 创建一个子分类
      */
-    public static void createCategory(String name, int parentId, SaveListener<String> listener) {
+    public static void createCategory(String name, Integer parentId, SaveListener<String> listener) {
         Category category = new Category();
-        category.setValue("name", name);
-        category.setValue("parentId", parentId);
+        category.setName(name);
+        category.setParentId(parentId);
         BmobACL acl = new BmobACL();
         acl.setPublicReadAccess(false);
         acl.setPublicWriteAccess(false);
-        acl.setReadAccess(BmobUser.getCurrentUser(), true);
-        acl.setWriteAccess(BmobUser.getCurrentUser(), true);
+        acl.setReadAccess(User.getCurrentUser(User.class), true);
+        acl.setWriteAccess(User.getCurrentUser(User.class), true);
         category.setACL(acl);
         category.save(listener);
     }
@@ -35,13 +37,13 @@ public class CategoryDao {
      */
     public static void createCategory(String name, SaveListener<String> listener) {
         Category category = new Category();
-        category.setValue("name", name);
-        category.setValue("parentId", 0);
+        category.setParentId(0);
+        category.setName(name);
         BmobACL acl = new BmobACL();
         acl.setPublicReadAccess(false);
         acl.setPublicWriteAccess(false);
-        acl.setReadAccess(BmobUser.getCurrentUser(), true);
-        acl.setWriteAccess(BmobUser.getCurrentUser(), true);
+        acl.setReadAccess(User.getCurrentUser(User.class), true);
+        acl.setWriteAccess(User.getCurrentUser(User.class), true);
         category.setACL(acl);
         category.save(listener);
     }
@@ -63,10 +65,9 @@ public class CategoryDao {
      * 删除分类
      *
      * @param objectId
-     * @param newName
      * @param listener
      */
-    public static void deleteCategory(String objectId, String newName, UpdateListener listener) {
+    public static void deleteCategory(String objectId, UpdateListener listener) {
         Category category = new Category();
         category.delete(objectId, listener);
     }

@@ -47,7 +47,7 @@
                 <data android:mimeType="message/rfc822" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CollectionActivity" />
+        <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.HelpActivity" />
@@ -57,7 +57,9 @@
         <service
             android:name=".activity.MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.CollectionActivity"></activity>
     </application>
 
 </manifest>

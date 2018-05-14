@@ -17,13 +17,13 @@ public class Link extends BmobObject {
     private String thumb;
     private String source;
     private String content;
-    private boolean category;
+    private Integer category;
 
-    public boolean getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(boolean category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 

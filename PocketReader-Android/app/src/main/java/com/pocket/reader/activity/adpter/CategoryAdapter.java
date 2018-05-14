@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pocket.reader.R;
-import com.pocket.reader.model.bean.Link;
+import com.pocket.reader.model.bean.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,45 +19,39 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by tony on 5/14/18.
+ * Created by tony on 2018/5/12.
  */
-
-public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private Context mContext;
-    private List<Link> mData;
+    private List<Category> mData;
 
-    public CollectionAdapter(Context mContext) {
+    public CategoryAdapter(Context mContext) {
         this.mContext = mContext;
         mData = new ArrayList<>();
     }
 
-    public void update(List<Link> data) {
+    public void update(List<Category> data) {
         mData.clear();
         mData.addAll(data);
         notifyDataSetChanged();
     }
 
-    public void delete(Link link){
-        mData.remove(link);
-        notifyDataSetChanged();
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_collection, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_category, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final Link link = mData.get(position);
-        holder.tvTitle.setText(link.getTitle());
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
+        final Category category = mData.get(position);
+        holder.tvName.setText(category.getName());
+        holder.btnRename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.onItemClick(view, position, link);
+                    mListener.onRenameClick(view, position, category);
                 }
             }
         });
@@ -65,23 +59,15 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.onDeleteClick(view, position, link);
+                    mListener.onDeleteClick(view, position, category);
                 }
             }
         });
-        holder.btnShare.setOnClickListener(new View.OnClickListener() {
+        holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.onShareClick(view, position, link);
-                }
-            }
-        });
-        holder.btnMove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mListener != null) {
-                    mListener.onMoveClick(view, position, link);
+                    mListener.onItemClick(view, position, category);
                 }
             }
         });
@@ -93,10 +79,9 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position, Link link);
-        void onDeleteClick(View view, int position, Link link);
-        void onMoveClick(View view, int position, Link link);
-        void onShareClick(View view, int position, Link link);
+        void onItemClick(View view, int position, Category category);
+        void onDeleteClick(View view, int position, Category category);
+        void onRenameClick(View view, int position, Category category);
     }
 
     private OnItemClickListener mListener;
@@ -105,16 +90,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         this.mListener = listener;
     }
 
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_title)
-        TextView tvTitle;
-        @BindView(R.id.btn_move)
-        Button btnMove;
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.tv_name)
+        TextView tvName;
+        @BindView(R.id.btn_rename)
+        Button btnRename;
         @BindView(R.id.btn_delete)
         Button btnDelete;
-        @BindView(R.id.btn_share)
-        Button btnShare;
         @BindView(R.id.root_view)
         LinearLayout rootView;
 

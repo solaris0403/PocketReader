@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.pocket.reader.account.AccountUtils;
 import com.pocket.reader.activity.AboutActivity;
-import com.pocket.reader.activity.CollectionActivity;
+import com.pocket.reader.activity.CategoryActivity;
 import com.pocket.reader.activity.HelpActivity;
 import com.pocket.reader.activity.MessageActivity;
 import com.pocket.reader.activity.SettingActivity;
@@ -129,7 +129,7 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.side_menu_collect:
-                Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
+                Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
                 startActivity(intent);
                 break;
             case R.id.side_menu_message:

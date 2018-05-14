@@ -7,17 +7,13 @@ import cn.bmob.v3.BmobObject;
  */
 
 public class Category extends BmobObject{
-    private int id;
+    private Integer id;
+    private Integer parentId;
     private String name;
-    private int parentId;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-
-//    public void setId(int id) {
-//        this.id = id;
-//    }
 
     public String getName() {
         return name;
@@ -27,11 +23,11 @@ public class Category extends BmobObject{
         this.name = name;
     }
 
-    public int getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(int parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 }

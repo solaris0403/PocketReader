@@ -9,14 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import com.pocket.reader.data.LinkManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by tony on 5/7/18.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements Observer{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +32,14 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        LinkManager.getInstance().addObserver(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+        LinkManager.getInstance().deleteObserver(this);
     }
 
     // 设置状态栏
@@ -60,5 +66,10 @@ public class BaseActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+
     }
 }
