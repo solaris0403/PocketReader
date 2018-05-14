@@ -30,6 +30,7 @@ public class LinkManager extends Observable {
     public void update(List<Link> links) {
         sLinks.clear();
         sLinks.addAll(links);
+        setChanged();
         notifyObservers();
     }
 

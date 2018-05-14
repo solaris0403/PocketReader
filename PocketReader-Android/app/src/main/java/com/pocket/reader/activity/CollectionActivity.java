@@ -8,7 +8,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.pocket.reader.BaseActivity;
@@ -79,11 +78,8 @@ public class CollectionActivity extends BaseActivity {
                     @Override
                     public void done(BmobException e) {
                         if (e != null) {
-                            Log.e(TAG, "onDeleteClick failed");
                             ToastUtils.show("删除失败");
-                        }else{
-                            Log.e(TAG, "onDeleteClick success");
-                            mAdapter.delete(link);
+                        } else {
                             LinkDao.queryLinks();
                         }
                     }
@@ -97,7 +93,7 @@ public class CollectionActivity extends BaseActivity {
                     public void done(final List<Category> list, BmobException e) {
                         if (e != null) {
                             ToastUtils.show(e.toString());
-                        }else{
+                        } else {
                             CategoryDialog.showCategoryDialog(CollectionActivity.this, list, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -106,7 +102,6 @@ public class CollectionActivity extends BaseActivity {
                                         @Override
                                         public void done(BmobException e) {
                                             if (e == null) {
-                                                mAdapter.delete(link);
                                                 LinkDao.queryLinks();
                                             } else {
                                                 ToastUtils.show("收藏失败");
@@ -140,37 +135,18 @@ public class CollectionActivity extends BaseActivity {
         mName = intent.getStringExtra(KEY_CATEGORY_NAME);
         mId = intent.getIntExtra(KEY_CATEGORY_ID, 0);
         getSupportActionBar().setTitle(mName);
-        updateData();
-    }
-
-    private void updateData(){
-        LinkDao.queryLinks(new FindListener<Link>() {
-            @Override
-            public void done(List<Link> list, BmobException e) {
-                if (e == null) {
-                    List<Link> links = new ArrayList<>();
-                    for (Link link : LinkManager.getInstance().getLinks()) {
-                        if (mId == link.getCategory().intValue()){
-                            links.add(link);
-                        }
-                    }
-                    mAdapter.update(links);
-                } else {
-                    ToastUtils.show("queryLinks exception");
-                }
-            }
-        });
+        LinkDao.queryLinks();
     }
 
     @Override
     public void update(Observable observable, Object o) {
         super.update(observable, o);
-//        List<Link> links = new ArrayList<>();
-//        for (Link link : LinkManager.getInstance().getLinks()) {
-//            if (mId == link.getCategory().intValue()){
-//                links.add(link);
-//            }
-//        }
-//        mAdapter.update(links);
+        List<Link> links = new ArrayList<>();
+        for (Link link : LinkManager.getInstance().getLinks()) {
+            if (mId == link.getCategory().intValue()) {
+                links.add(link);
+            }
+        }
+        mAdapter.update(links);
     }
 }
